@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdgeFinder Agent Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body>
+    <header>
+        <h1>EdgeFinder Agent</h1>
+        <div class="mode-badge {{ 'live' if mode == 'live' else 'paper' }}">
+            {{ mode.upper() }} MODE
+        </div>
+    </header>
+
+    <main>
+        <!-- Portfolio Summary -->
+        <section class="card" hx-get="/api/portfolio" hx-trigger="load, every 30s" hx-swap="innerHTML">
+            <div class="loading">Loading portfolio...</div>
+        </section>
+
+        <!-- Recent Trades -->
+        <section class="card">
+            <h2>Recent Trades</h2>
+            <div hx-get="/api/trades" hx-trigger="load, every 30s" hx-swap="innerHTML">
+                <div class="loading">Loading trades...</div>
+            </div>
+        </section>
+
+        <!-- AI Analysis Log -->
+        <section class="card">
+            <h2>AI Analysis Log</h2>
+            <div hx-get="/api/analyses" hx-trigger="load, every 60s" hx-swap="innerHTML">
+                <div class="loading">Loading analyses...</div>
+            </div>
+        </section>
+
+        <!-- Pipeline Status -->
+        <section class="card">
+            <h2>Pipeline Status</h2>
+            <div hx-get="/api/status" hx-trigger="load, every 30s" hx-swap="innerHTML">
+                <div class="loading">Loading status...</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>EdgeFinder Agent &mdash; AI-powered prediction market edge detection</p>
+    </footer>
+</body>
+</html>
