@@ -1,0 +1,32 @@
+mode: paper  # 'paper' or 'live' — paper is safe default
+
+schedule:
+  interval_hours: 2
+  max_markets_per_run: 20
+
+platforms:
+  polymarket:
+    enabled: true
+    base_url: https://gamma-api.polymarket.com
+    min_volume: 10000
+    min_liquidity: 5000
+  manifold:
+    enabled: true
+    base_url: https://api.manifold.markets/v0
+    min_volume: 1000
+
+analysis:
+  model: claude-sonnet-4-6
+  min_confidence: 0.6
+  temperature: 0.3
+
+risk:
+  min_edge_threshold: 0.10       # 10% minimum edge to trade
+  kelly_fraction: 0.25           # Quarter-Kelly for safety
+  max_position_size: 50.0        # Max $ per market
+  max_portfolio_exposure: 500.0  # Total max $
+  max_correlated_exposure: 150.0 # Max on related markets
+
+dashboard:
+  host: 0.0.0.0
+  port: 8080
