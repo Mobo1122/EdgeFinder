@@ -1,0 +1,16 @@
+services:
+  edgefinder:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - data:/app/data
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      - DB_PATH=/app/data/edgefinder.db
+
+volumes:
+  data:

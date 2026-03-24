@@ -1,0 +1,26 @@
+# EdgeFinder systemd service
+#
+# Install:
+#   sudo cp edgefinder.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now edgefinder
+#
+# Logs:
+#   journalctl -u edgefinder -f
+
+[Unit]
+Description=EdgeFinder Prediction Market Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=edgefinder
+WorkingDirectory=/opt/edgefinder
+ExecStart=/opt/edgefinder/venv/bin/python main.py
+Restart=on-failure
+RestartSec=10
+EnvironmentFile=/opt/edgefinder/.env
+
+[Install]
+WantedBy=multi-user.target
