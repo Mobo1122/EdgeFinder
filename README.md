@@ -76,6 +76,45 @@ edgefinder/
   db/            — SQLite persistence layer
 ```
 
+## Deploy on a Server
+
+### Option 1: Docker (recommended)
+
+```bash
+# 1. Clone and configure
+git clone <your-repo-url> && cd edgefinder
+cp .env.example .env
+# Edit .env with your ANTHROPIC_API_KEY
+
+# 2. Start
+docker compose up -d
+
+# Dashboard at http://your-server:8080
+# View logs
+docker compose logs -f
+```
+
+### Option 2: systemd (no Docker)
+
+```bash
+# 1. Set up on server
+sudo useradd -r -s /bin/false edgefinder
+sudo cp -r . /opt/edgefinder
+cd /opt/edgefinder
+python3 -m venv venv
+venv/bin/pip install -r requirements.txt
+sudo cp .env.example .env
+# Edit /opt/edgefinder/.env with your ANTHROPIC_API_KEY
+
+# 2. Install and start the service
+sudo cp edgefinder.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now edgefinder
+
+# View logs
+journalctl -u edgefinder -f
+```
+
 ## Risk Disclaimer
 
 This is a research and educational tool. Prediction market trading involves risk of loss. Past performance does not guarantee future results. Always start with paper trading to validate the strategy. The authors are not responsible for any financial losses.
